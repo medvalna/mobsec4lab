@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobsec4lab/views/homepage.dart';
-import 'package:mobsec4lab/views/intropage.dart';
+import 'package:mobsec4lab/views/postPage.dart';
+import 'package:mobsec4lab/views/homePage.dart';
 import 'api/sheets/feedbackSheetApi.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 void main() async {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const IntroPage(), //HomePage(),
+      home: const HomePage(), //HomePage(),
     );
   }
 }

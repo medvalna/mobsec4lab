@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 import '../models/post.dart';
 import '../services/remote_services.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class PostPage extends StatefulWidget {
+  const PostPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<PostPage> createState() => _PostPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PostPageState extends State<PostPage> {
   List<Post>? posts;
   var isLoaded = false;
   @override
   void initState() {
     super.initState();
     getData();
+    getSecure();
   }
-
+  getSecure() async {
+    await FlutterWindowManager.addFlags(
+        FlutterWindowManager.FLAG_SECURE);
+  }
   getData() async {
     posts = await RemoteService().getPosts();
     if (posts != null) {

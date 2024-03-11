@@ -39,6 +39,7 @@ dependencies:
   gsheets: ^0.5.0
   uuid: ^4.3.3
   flutter_dotenv: ^5.1.0
+  flutter_windowmanager: ^0.2.0
 
 dev_dependencies:
   flutter_test:

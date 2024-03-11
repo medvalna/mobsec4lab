@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:mobsec4lab/api/sheets/feedbackSheetApi.dart';
-import 'package:mobsec4lab/views/homepage.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:mobsec4lab/views/postPage.dart';
 
 import 'feedbackpage.dart';
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-class IntroPage extends StatelessWidget {
-  const IntroPage({super.key});
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    getSecure();
+  }
+  getSecure() async {
+    await FlutterWindowManager.addFlags(
+        FlutterWindowManager.FLAG_SECURE);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +51,7 @@ class IntroPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const PostPage(),
                     ),
                   );
                 },
