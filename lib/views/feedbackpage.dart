@@ -89,6 +89,14 @@ class _FeedBackPageState extends State<FeedBackPage> {
                   };
                   feedbackMap.add(item);
                   await FeedBackSheetApi.insert(feedbackMap);
+                  setState((){
+                    review = "";
+                    controllerReview.text="";
+                    controllerName.text="";
+                    name = "";
+                  });
+
+
                 }),
           ],
         ),
