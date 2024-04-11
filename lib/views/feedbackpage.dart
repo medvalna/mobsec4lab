@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mobsec4lab/models/feedback.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import '../api/sheets/feedbackSheetApi.dart';
 
 class FeedBackPage extends StatefulWidget {
-  const FeedBackPage({super.key});
+  const FeedBackPage({super.key, required this.pref});
+  final SharedPreferences pref;
 
   @override
   State<FeedBackPage> createState() => _FeedBackPageState();
@@ -16,12 +16,19 @@ class _FeedBackPageState extends State<FeedBackPage> {
   late TextEditingController controllerReview;
   String name = '';
   String review = '';
-
+  String? dbName = '';
+  String? dbReview = '';
   @override
   void initState() {
     super.initState();
     controllerName = TextEditingController();
     controllerReview = TextEditingController();
+  }
+  @override
+  void initData() {
+    super.initState();
+    dbName= widget.pref.getString('name');
+    dbReview = widget.pref.getString('review');
   }
 
   @override
@@ -40,10 +47,25 @@ class _FeedBackPageState extends State<FeedBackPage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text('FeedBack',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
-      body: Center(
+      body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            Container(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  //alignment: Alignment.topLeft,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text('previous review:', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                    Text('Name: $dbName', style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal)),
+                    Text('Review: $dbReview', style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal)),],
+                ),
+              ),
+
+
+            ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: TextField(
@@ -57,9 +79,6 @@ class _FeedBackPageState extends State<FeedBackPage> {
                       name = controllerName.text;
                     });
                   }),
-            ),
-            SizedBox(
-              height: 50,
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -76,27 +95,21 @@ class _FeedBackPageState extends State<FeedBackPage> {
                 },
               ),
             ),
-            const SizedBox(height: 30),
+
             ElevatedButton(
                 child: Text('Save'),
                 //style: Style(backgroundColor: Theme.of(context).colorScheme.inversePrimary),
                 onPressed: () async {
-                  List<Map<String, dynamic>> feedbackMap = [];
-                  Map<String, dynamic> item = {
-                    FeedbackFields().id: uuid.v1(),
-                    FeedbackFields().name: name,
-                    FeedbackFields().review: review
-                  };
-                  feedbackMap.add(item);
-                  await FeedBackSheetApi.insert(feedbackMap);
+                  await widget.pref.setString('review',review);
+                  await widget.pref.setString('name',name);
+                  dbName= widget.pref.getString('name');
+                  dbReview = widget.pref.getString('review');
                   setState((){
                     review = "";
                     controllerReview.text="";
                     controllerName.text="";
                     name = "";
                   });
-
-
                 }),
           ],
         ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:mobsec4lab/views/postPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'feedbackpage.dart';
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
+  const HomePage({super.key, required this.pref,});
+  final SharedPreferences pref;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     getSecure();
   }
   getSecure() async {
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FeedBackPage(),
+                      builder: (context) => FeedBackPage(pref: widget.pref),
                     ),
                   );
                 },
