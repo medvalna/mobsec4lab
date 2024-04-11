@@ -11,6 +11,6 @@ Lab for mobile security
 1. HomePage and PostPage have security flags, witch prevents user from screenshotting.
 
 # This project uses:
-1. Google API for storing reviews
+1. Shared Preferences for storing reviews
 2. [free RestAPI](https://jsonplaceholder.typicode.com/) for getting posts
 3. [Flutter window manager](https://pub.dev/packages/flutter_windowmanager) for disabling screenshots
