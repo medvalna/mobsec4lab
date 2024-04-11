@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uuid/uuid.dart';
 
 class FeedBackPage extends StatefulWidget {
   const FeedBackPage({super.key, required this.pref});
@@ -11,7 +10,6 @@ class FeedBackPage extends StatefulWidget {
 }
 
 class _FeedBackPageState extends State<FeedBackPage> {
-  var uuid = Uuid();
   late TextEditingController controllerName;
   late TextEditingController controllerReview;
   String name = '';
@@ -19,18 +17,15 @@ class _FeedBackPageState extends State<FeedBackPage> {
   String? dbName = '';
   String? dbReview = '';
   @override
-  void initState() {
+  void initState(){
     super.initState();
     controllerName = TextEditingController();
     controllerReview = TextEditingController();
-  }
-  @override
-  void initData() {
-    super.initState();
     dbName= widget.pref.getString('name');
     dbReview = widget.pref.getString('review');
+    print(dbName);
+    print(dbReview);
   }
-
   @override
   void dispose() {
     controllerName.dispose();
